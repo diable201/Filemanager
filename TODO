@@ -1,0 +1,33 @@
+Task:
+
+1. Your current location is disk C directory.
+
+2. Each time there are two options: you are either work with directory, or with file.
+
+3. If your current location is file you have several options:
+
+a) delete file
+
+b) rename file
+
+c) add content to this file
+
+d) rewrite content of this file
+
+e) return to the parent directory
+
+4. If your current location is directory you have several options:
+
+a) rename directory
+
+b) print number of files in it
+
+c) print number of directories in it
+
+d) list content of the directory 
+
+e) add file to this directory
+
+f) add new directory to this directory
+
+Your task is to write program that will simulate this repeatable process
