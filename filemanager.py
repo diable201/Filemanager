@@ -19,21 +19,6 @@ print("[1] Files", select)
 print("[2] Directories", select)
 
 
-def delete():
-    pass
-
-
-if select == 1:
-    option = str(input())
-
-    print('which option?')
-    print('[1] Delete file', option)
-    print('[2] Rename file', option)
-    print('[3] Read data', option)
-    print('[4] Append data', option)
-    print('[5] Return to the parent directory', option)
-
-
 # If the file exists, delete it
 def delete():
     print("write the name of file to delete")
@@ -167,3 +152,25 @@ def size():
         if ENTRY.is_file():
             information = ENTRY.stat()
             print(f'{ENTRY.name}\t Size: {information.st_size}')
+
+
+if select == 1:
+    option = str(input())
+
+    print('which option?')
+    print('[1] Delete file', option)
+    print('[2] Rename file', option)
+    print('[3] Read data', option)
+    print('[4] Append data', option)
+    print('[5] Return to the parent directory', option)
+    if option == 1:
+        delete()
+    elif option == 2:
+        rename()
+    elif option == 3:
+        read_data()
+    elif option == 4:
+        append_data()
+    elif option == 5:
+        return_to_parent()
+
