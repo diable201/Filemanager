@@ -2,15 +2,15 @@ import os
 import shutil
 
 from datetime import datetime
+from pathlib import Path
 
 path = '/Users/macbookair/Downloads/filemanager-master'  # path to directory
-data_file = '/Users/macbookair/Downloads/filemanager-master'
 
 print('_____ _ _        __  __ ')
-print('|  ___(_) | ___  |  \/  | __ _ _ __   __ _  __ _  ___ _ __')
-print('| |_  | | |/ _ \ | |\/| |/ _` |  _ \ / _` |/ _` |/ _ \  __|')
+print('|  ___(_) | ___  |  \\/  | __ _ _ __   __ _  __ _  ___ _ __')
+print('| |_  | | |/ _ \\ | |\\/| |/ _` |  _ \\ / _` |/ _` |/ _ \\  __|')
 print('|  _| | | |  __/ | |  | | (_| | | | | (_| | (_| |  __/ |   ')
-print('|_|   |_|_|\___| |_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|')
+print('|_|   |_|_|\\___| |_|  |_|\\__,_|_| |_|\\__,_|\\__, |\\___|_|')
 print('                                           |___/')
 
 print("With what do you want to work?")
@@ -38,8 +38,9 @@ def rename():
 
 # Read Data
 def read_data():
-    file = open('ex5.txt')
-    if file.mode == 'r':
+    path_to_file = str(input())
+    file = open(path_to_file)
+    if file.mode == 'r' or 'rw':
         contents = file.read()
         print(contents)
 
@@ -67,54 +68,54 @@ def return_to_parent():
 
 # The Next Commands for Directory
 
-
 # Rename Directory
-# def rename_dir():
-#     path_of_dir = str(input())
-#     data_file = Path(path_of_dir)
-#     data_file.rename('example_directory_2')
+def rename_dir():
+    path_of_dir = str(input())
+    name_of_dir = Path(path_of_dir)
+    name_of_dir.rename('example_directory_2')
 
 
 # Print number of files in dir
 def number_of_files():
-    path = '/Users/macbookair/Downloads/filemanager-master'
-    number_of_files = 0
+    quantity_of_files = 0
     with os.scandir(path) as entries:
         for entry in entries:
             if entry.is_file():
-                number_of_files += 1
-                print(entry.name)
-    print(number_of_files)
+                quantity_of_files += 1
+                print(entry.name, quantity_of_files)
+    print(quantity_of_files)
 
 
 # Print number of directories in dir
 def number_of_dir():
-    path = '/Users/macbookair/Downloads/filemanager-master'
     with os.scandir(path) as entries:
-        number_of_dir = 0
+        quantity_of_dir = 0
         for entry in entries:
             if entry.is_dir():
-                number_of_dir += 1
-                print(entry.name)
-    print(number_of_dir)
+                quantity_of_dir += 1
+                print(entry.name, quantity_of_dir)
+    print(quantity_of_dir)
 
 
 # List content
-def list():
-    path = '/Users/macbookair/Downloads/filemanager-master'
+def list_of_files():
     with os.scandir(path) as entries:
-        number_of_f = 0
+        quantity_of_files = 0
+        quantity_of_dir = 0
         for entry in entries:
             if entry.is_file():
-                number_of_f += 1
-                print(entry.name, number_of_f)
+                quantity_of_files += 1
+                print(entry.name, quantity_of_files)
             if entry.is_dir():
-                print(entry.name)
+                quantity_of_dir += 1
+                print(entry.name, quantity_of_dir)
 
 
 # Move file
 def move():
-    shutil.move('dir_1/', 'backup/')
+    old_way = str(input())
+    new_way = str(input())
+    shutil.move(old_way, new_way)
 
 
 # shutil.copy()
@@ -126,7 +127,7 @@ def create():
     dir_name = str(input())
     os.mkdir(dir_name)
     file_name = str(input())
-    file = open(file_name, 'rw')
+    open(file_name, 'rw')
 
 
 # Convert Unix Time
@@ -138,7 +139,7 @@ def convert_date(timestamp):
 
 # Time Modified
 def time():
-    dir_entries = os.scandir('/Users/macbookair/Downloads/filemanager-master')
+    dir_entries = os.scandir(path)
     for ENTRY in dir_entries:
         if ENTRY.is_file():
             information = ENTRY.stat()
@@ -147,7 +148,7 @@ def time():
 
 # Size Modified
 def size():
-    dir_entries = os.scandir('/Users/macbookair/Downloads/filemanager-master')
+    dir_entries = os.scandir(path)
     for ENTRY in dir_entries:
         if ENTRY.is_file():
             information = ENTRY.stat()
@@ -156,7 +157,6 @@ def size():
 
 if select == 1:
     option = str(input())
-
     print('which option?')
     print('[1] Delete file', option)
     print('[2] Rename file', option)
@@ -173,4 +173,27 @@ if select == 1:
         append_data()
     elif option == 5:
         return_to_parent()
-
+if select == 2:
+    option = str(input())
+    print('which option')
+    print('[1] Rename Directory', option)
+    print('[2] Number of files in Directory', option)
+    print('[3] Number of Directories', option)
+    print('[4] List Content', option)
+    print('[5] Time Modified', option)
+    print('[6] Size of files', option)
+    print('[7] Create file or directory')
+    if option == 1:
+        rename_dir()
+    elif option == 2:
+        number_of_files()
+    elif option == 3:
+        number_of_dir()
+    elif option == 4:
+        list_of_files()
+    elif option == 5:
+        time()
+    elif option == 6:
+        size()
+    elif option == 7:
+        create()
