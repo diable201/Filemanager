@@ -218,6 +218,7 @@ def main():
             print('[4] Append data')
             print('[5] Return to the parent directory')
             print('[6] Copy file')
+            print('[7] Find extension of files')
             print('Another number to quit')
             option = int(input())
             if option == 1:
