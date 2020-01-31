@@ -81,7 +81,9 @@ def overwrite():
     print('Write the name of file to overwrite')
     file = str(input())
     with open(file, 'w') as file_overwrite:
-        file_overwrite.write('new content')
+        print('Write the content')
+        content = str(input())
+        file_overwrite.write(content)
     print('File overwritten successfully')
 
 
@@ -103,6 +105,7 @@ def move():
     try:
         print('Enter the name of file to move')
         old_way = str(input())
+        print('Write the name of directory')
         new_way = str(input())
         shutil.move(old_way, new_way)
         print('File moved successfully')
@@ -127,6 +130,7 @@ def file_extension():
 def rename_dir():
     print('Enter the name of directory')
     name_of_dir = str(input())
+    print('Enter the new name of directory')
     new_name_of_dir = str(input())
     os.rename(name_of_dir, new_name_of_dir)
     print('Directory renamed successfully')
@@ -167,13 +171,27 @@ def create_dir():
     print('Enter the name of new directory')
     dir_name = str(input())
     os.mkdir(dir_name)
+    print('Directory created successfully')
 
 
 # Create file
 def create_file():
     print('Enter the name of new file')
-    file_name = str(input())
-    open(file_name, 'rw+')
+    name = str(input())
+    with open(name, "w") as file:
+        print('File created successfully')
+        print('Do you want to write data?')
+        print('[1] Yes')
+        print('[2] No')
+        choice = int(input())
+        if choice == 1:
+            print('Write your data')
+            data = str(input())
+            file.write(data)
+            print('Data written successfully')
+        elif choice == 2:
+            file.close()
+            print('File closed')
 
 
 # Convert Unix Time
@@ -198,7 +216,12 @@ def size():
     for ENTRY in dir_entries:
         if ENTRY.is_file():
             information = ENTRY.stat()
-            print(f'{ENTRY.name}\t Size: {information.st_size} Bytes')
+            if information.st_size / 1024 / 1024 >= 1:
+                print(f'{ENTRY.name}\t Size: { round(information.st_size / 1024 / 1024)}  MB')
+            if information.st_size / 1024 >= 1:
+                print(f'{ENTRY.name}\t Size: { round(information.st_size / 1024)}  KB')
+            else:
+                print(f'{ENTRY.name}\t Size: {information.st_size}  Bytes')
 
 
 # Menu
@@ -218,7 +241,9 @@ def main():
             print('[4] Append data')
             print('[5] Return to the parent directory')
             print('[6] Copy file')
-            print('[7] Find extension of files')
+            print('[7] Move file')
+            print('[8] Overwrite file')
+            print('[9] Find extension of files')
             print('Another number to quit')
             option = int(input())
             if option == 1:
@@ -234,6 +259,10 @@ def main():
             elif option == 6:
                 copy()
             elif option == 7:
+                move()
+            elif option == 8:
+                overwrite()
+            elif option == 9:
                 file_extension()
             else:
                 continue
