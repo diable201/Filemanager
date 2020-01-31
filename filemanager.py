@@ -70,10 +70,10 @@ def append_data():
 
 # Return to the parent
 def return_to_parent():
-    print('Enter the name of directory')
-    path_of_file = str(input())
-    path.parent = Path(path_of_file)
-    print(path.parent)
+    print('Enter the name of file')
+    file = str(input())
+    path_of_file = Path(file)
+    print(path_of_file.parent)
 
 
 # Overwrite File
