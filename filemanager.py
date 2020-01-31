@@ -110,6 +110,7 @@ def move():
         print('File doesnt exist')
 
 
+# Extension of files
 def file_extension():
     print('Enter the extension of file. For Example: *.py')
     pattern = str(input())
