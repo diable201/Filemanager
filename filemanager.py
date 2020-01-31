@@ -1,7 +1,9 @@
 import os
 import shutil
 import fnmatch
+import sys
 
+from zipfile import ZipFile
 from datetime import datetime
 from pathlib import Path
 
@@ -217,11 +219,82 @@ def size():
         if ENTRY.is_file():
             information = ENTRY.stat()
             if information.st_size / 1024 / 1024 >= 1:
-                print(f'{ENTRY.name}\t Size: { round(information.st_size / 1024 / 1024)}  MB')
+                print(f'{ENTRY.name}\t Size: {round(information.st_size / 1024 / 1024)}  MB')
             if information.st_size / 1024 >= 1:
-                print(f'{ENTRY.name}\t Size: { round(information.st_size / 1024)}  KB')
+                print(f'{ENTRY.name}\t Size: {round(information.st_size / 1024)}  KB')
             else:
                 print(f'{ENTRY.name}\t Size: {information.st_size}  Bytes')
+
+# Zip archives
+
+
+# Extract zip
+def extract_zip():
+    try:
+        print('Enter the name of zip')
+        zip_name = str(input())
+        with ZipFile(zip_name, 'r') as zip:
+            zip.printdir()
+            print('Extract files?')
+            print('[1] Yes')
+            print('[2] No')
+            answer = int(input())
+            if answer == 1:
+                print('Extracting files...')
+                zip.extractall()
+                print('Files extracted successfully')
+    except FileNotFoundError:
+        print('Zip doesnt exist')
+
+
+# Get the files to zip
+def get_all_file_paths(directory):
+    file_paths = []
+    # crawling through directory and subdirectories
+    for root, directories, files in os.walk(directory):
+        for filename in files:
+            # join the two strings in order to form the full file_path.
+            file_path = os.path.join(root, filename)
+            file_paths.append(file_path)
+    return file_paths
+
+
+# Write zip
+def write_zip():
+    print('Enter the name of directory')
+    directory = str(input())
+    file_paths = get_all_file_paths(directory)
+    print('The next files will be zipped:')
+    for file_name in file_paths:
+        print(file_name)
+    print('Are you sure to zip this files?')
+    print('[1] Yes')
+    print('[2] No')
+    answer = int(input())
+    if answer == 1:
+        print('Enter the zip name')
+        zip_name = str(input())
+        with ZipFile(zip_name, 'w') as zip:
+            for file in file_paths:
+                zip.write(file)
+        print('All files zipped successfully')
+    elif answer == 2:
+        print('Zip terminated by user')
+        sys.exit()
+
+
+# Get information about zip
+def zip_info():
+    print('Enter the zip name')
+    zip_name = str(input())
+    with ZipFile(zip_name, 'r') as zip:
+        for info in zip.infolist():
+            print(info.filename)
+            print('\tModified:\t' + str(time()))
+            print('\tSystem:\t\t' + str(info.create_system) + '(0 = Windows, 1 = Linux, 2 = MacOS)')
+            print('\tZIP version:\t' + str(info.create_version))
+            print('\tCompressed:\t' + str(info.compress_size) + 'bytes')
+            print('\tUncompressed:\t' + str(info.file_size) + 'bytes')
 
 
 # Menu
@@ -231,7 +304,8 @@ def main():
         print('With what do you want to work?')
         print('[1] Files')
         print('[2] Directories')
-        print('[3] Exit')
+        print('[3] Zip')
+        print('[4] Exit')
         select = int(input())
         if select == 1:
             print('Which option ?')
@@ -297,6 +371,20 @@ def main():
             else:
                 continue
         if select == 3:
+            print('Which option ?')
+            print('[1] Extract Zip')
+            print('[2] Create Zip')
+            print('[3] Get info about Zip')
+            option = int(input())
+            if option == 1:
+                extract_zip()
+            elif option == 2:
+                write_zip()
+            elif option == 3:
+                zip_info()
+            else:
+                continue
+        if select == 4:
             print('  _             ____   ____ ')
             print(' | |__  _   _  / ___| / ___| ')
             print(' |  _ \\| | | | \\___ \\ \\___\\ ')
