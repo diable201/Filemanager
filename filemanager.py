@@ -1,7 +1,6 @@
 import os
 import shutil
 import fnmatch
-import sys
 
 from zipfile import ZipFile
 from datetime import datetime
@@ -9,7 +8,7 @@ from pathlib import Path
 
 path = os.getcwd()  # Path to directory
 
-print('_____ _ _        __  __ ')
+print(' _____ _ _        __  __ ')
 print('|  ___(_) | ___  |  \\/  | __ _ _ __   __ _  __ _  ___ _ __')
 print('| |_  | | |/ _ \\ | |\\/| |/ _` |  _ \\ / _` |/ _` |/ _ \\  __|')
 print('|  _| | | |  __/ | |  | | (_| | | | | (_| | (_| |  __/ |   ')
@@ -73,20 +72,26 @@ def append_data():
 # Return to the parent
 def return_to_parent():
     print('Enter the name of file')
-    file = str(input())
-    path_of_file = Path(file)
-    print(path_of_file.parent)
+    try:
+        file = str(input())
+        path_of_file = Path(file)
+        print(path_of_file.parent)
+    except FileNotFoundError:
+        print('File doesnt exist')
 
 
 # Overwrite File
 def overwrite():
     print('Write the name of file to overwrite')
-    file = str(input())
-    with open(file, 'w') as file_overwrite:
-        print('Write the content')
-        content = str(input())
-        file_overwrite.write(content)
-    print('File overwritten successfully')
+    try:
+        file = str(input())
+        with open(file, 'w') as file_overwrite:
+            print('Write the content')
+            content = str(input())
+            file_overwrite.write(content)
+        print('File overwritten successfully')
+    except FileNotFoundError:
+        print('File doesnt exist')
 
 
 # Copy File
@@ -117,12 +122,15 @@ def move():
 
 # Extension of files
 def file_extension():
-    print('Enter the extension of file. For Example: *.py')
-    pattern = str(input())
-    print('Pattern:', pattern)
-    files = os.listdir('.')
-    print('Files:', files)
-    print('Matches:', fnmatch.filter(files, pattern))
+    try:
+        print('Enter the extension of file. For Example: *.py')
+        pattern = str(input())
+        print('Pattern:', pattern)
+        files = os.listdir('.')
+        print('Files:', files)
+        print('Matches:', fnmatch.filter(files, pattern))
+    except FileNotFoundError:
+        print('Extension doesnt exist')
 
 
 # The Next Commands for Directory
@@ -225,13 +233,14 @@ def size():
             else:
                 print(f'{ENTRY.name}\t Size: {information.st_size}  Bytes')
 
-# Zip archives
+
+# Next commands for Zip archives
 
 
 # Extract zip
 def extract_zip():
     try:
-        print('Enter the name of zip')
+        print('Enter the name of zip. Example: myzip.zip')
         zip_name = str(input())
         with ZipFile(zip_name, 'r') as zip:
             zip.printdir()
@@ -243,11 +252,14 @@ def extract_zip():
                 print('Extracting files...')
                 zip.extractall()
                 print('Files extracted successfully')
+            elif answer == 2:
+                print('Operation terminated by user')
+                return
     except FileNotFoundError:
         print('Zip doesnt exist')
 
 
-# Get the files to zip
+# Get the files from directory for zipping
 def get_all_file_paths(directory):
     file_paths = []
     # crawling through directory and subdirectories
@@ -261,7 +273,7 @@ def get_all_file_paths(directory):
 
 # Write zip
 def write_zip():
-    print('Enter the name of directory')
+    print('Enter the name of directory. Example: Folder')
     directory = str(input())
     file_paths = get_all_file_paths(directory)
     print('The next files will be zipped:')
@@ -279,22 +291,24 @@ def write_zip():
                 zip.write(file)
         print('All files zipped successfully')
     elif answer == 2:
-        print('Zip terminated by user')
-        sys.exit()
+        print('Operation terminated by user')
+        return
 
 
 # Get information about zip
 def zip_info():
-    print('Enter the zip name')
-    zip_name = str(input())
-    with ZipFile(zip_name, 'r') as zip:
-        for info in zip.infolist():
-            print(info.filename)
-            print('\tModified:\t' + str(time()))
-            print('\tSystem:\t\t' + str(info.create_system) + '(0 = Windows, 1 = Linux, 2 = MacOS)')
-            print('\tZIP version:\t' + str(info.create_version))
-            print('\tCompressed:\t' + str(info.compress_size) + 'bytes')
-            print('\tUncompressed:\t' + str(info.file_size) + 'bytes')
+    print('Enter the zip name. Example: myzip.zip')
+    try:
+        zip_name = str(input())
+        with ZipFile(zip_name, 'r') as zip:
+            for info in zip.infolist():
+                print(info.filename)
+                print('\tSystem:\t\t' + str(info.create_system) + '(0 = WindowsSystem, 3 = UnixSystem)')
+                print('\tZIP version:\t' + str(info.create_version))
+                print('\tCompressed:\t' + str(info.compress_size) + 'Bytes')
+                print('\tUncompressed:\t' + str(info.file_size) + 'Bytes')
+    except FileNotFoundError:
+        print('Zip doesnt exist')
 
 
 # Menu
@@ -388,7 +402,7 @@ def main():
             print('  _             ____   ____ ')
             print(' | |__  _   _  / ___| / ___| ')
             print(' |  _ \\| | | | \\___ \\ \\___\\ ')
-            print(' | |_)^| |_| |  ___) | ___) |')
+            print(' | |_)^| |_| |  ___)| ___)|')
             print(' |_.__/ \\__, | |____(_)____/')
             print('        |___/        ')
             exit()
