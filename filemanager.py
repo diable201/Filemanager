@@ -71,11 +71,11 @@ def append_data():
 
 # Return to the parent
 def return_to_parent():
-    print('Enter the name of file')
+    print('Enter the full path to the file')
     try:
         file = str(input())
-        path_of_file = Path(file)
-        print(path_of_file.parent)
+        path_of_file = Path(file).parent
+        print(path_of_file)
     except FileNotFoundError:
         print('File doesnt exist')
 
@@ -139,11 +139,14 @@ def file_extension():
 # Rename Directory
 def rename_dir():
     print('Enter the name of directory')
-    name_of_dir = str(input())
-    print('Enter the new name of directory')
-    new_name_of_dir = str(input())
-    os.rename(name_of_dir, new_name_of_dir)
-    print('Directory renamed successfully')
+    try:
+        name_of_dir = str(input())
+        print('Enter the new name of directory')
+        new_name_of_dir = str(input())
+        os.rename(name_of_dir, new_name_of_dir)
+        print('Directory renamed successfully')
+    except FileNotFoundError:
+        print('Directory doesnt exist')
 
 
 # Print number of files in dir
@@ -228,7 +231,7 @@ def size():
             information = ENTRY.stat()
             if information.st_size / 1024 / 1024 >= 1:
                 print(f'{ENTRY.name}\t Size: {round(information.st_size / 1024 / 1024)}  MB')
-            if information.st_size / 1024 >= 1:
+            elif information.st_size / 1024 >= 1:
                 print(f'{ENTRY.name}\t Size: {round(information.st_size / 1024)}  KB')
             else:
                 print(f'{ENTRY.name}\t Size: {information.st_size}  Bytes')
@@ -240,7 +243,7 @@ def size():
 # Extract zip
 def extract_zip():
     try:
-        print('Enter the name of zip. Example: myzip.zip')
+        print('Enter the name of zip. Example: magic.zip')
         zip_name = str(input())
         with ZipFile(zip_name, 'r') as zip:
             zip.printdir()
@@ -297,7 +300,7 @@ def write_zip():
 
 # Get information about zip
 def zip_info():
-    print('Enter the zip name. Example: myzip.zip')
+    print('Enter the zip name. Example: magic.zip')
     try:
         zip_name = str(input())
         with ZipFile(zip_name, 'r') as zip:
@@ -401,8 +404,8 @@ def main():
         if select == 4:
             print('  _             ____   ____ ')
             print(' | |__  _   _  / ___| / ___| ')
-            print(' |  _ \\| | | | \\___ \\ \\___\\ ')
-            print(' | |_)^| |_| |  ___)| ___)|')
+            print(' |  _ \\| | | | \\___ \\ \\___ \\ ')
+            print(' | |_)^| |_| |  ___) | ___) |')
             print(' |_.__/ \\__, | |____(_)____/')
             print('        |___/        ')
             exit()
