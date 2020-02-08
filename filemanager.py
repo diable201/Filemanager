@@ -21,11 +21,8 @@ def delete():
     print('Write the name of file to delete')
     try:
         file = str(input())
-        if os.path.isfile(file):
-            os.remove(file)
-            print('File deleted successfully')
-        else:
-            print(f'Error: {file} not a valid filename')
+        os.remove(file)
+        print('File deleted successfully')
     except FileNotFoundError:
         print('File doesnt exist')
 
@@ -35,6 +32,7 @@ def rename():
     print('Enter the name of file')
     try:
         original = str(input())
+        print('Enter the new name of file')
         remaster = str(input())
         os.rename(original, remaster)
     except FileNotFoundError:
@@ -231,7 +229,7 @@ def size():
             information = ENTRY.stat()
             if information.st_size / 1024 / 1024 >= 1:
                 print(f'{ENTRY.name}\t Size: {round(information.st_size / 1024 / 1024)}  MB')
-            elif information.st_size / 1024 >= 1:
+            if information.st_size / 1024 >= 1:
                 print(f'{ENTRY.name}\t Size: {round(information.st_size / 1024)}  KB')
             else:
                 print(f'{ENTRY.name}\t Size: {information.st_size}  Bytes')
@@ -243,7 +241,7 @@ def size():
 # Extract zip
 def extract_zip():
     try:
-        print('Enter the name of zip. Example: magic.zip')
+        print('Enter the name of zip. Example: myzip.zip')
         zip_name = str(input())
         with ZipFile(zip_name, 'r') as zip:
             zip.printdir()
@@ -300,7 +298,7 @@ def write_zip():
 
 # Get information about zip
 def zip_info():
-    print('Enter the zip name. Example: magic.zip')
+    print('Enter the zip name. Example: myzip.zip')
     try:
         zip_name = str(input())
         with ZipFile(zip_name, 'r') as zip:
@@ -309,7 +307,6 @@ def zip_info():
                 print('\tSystem:\t\t' + str(info.create_system) + '(0 = WindowsSystem, 3 = UnixSystem)')
                 print('\tZIP version:\t' + str(info.create_version))
                 print('\tCompressed:\t' + str(info.compress_size) + 'Bytes')
-                print('\tUncompressed:\t' + str(info.file_size) + 'Bytes')
     except FileNotFoundError:
         print('Zip doesnt exist')
 
@@ -392,6 +389,7 @@ def main():
             print('[1] Extract Zip')
             print('[2] Create Zip')
             print('[3] Get info about Zip')
+            print('Another number to quit')
             option = int(input())
             if option == 1:
                 extract_zip()
@@ -404,8 +402,8 @@ def main():
         if select == 4:
             print('  _             ____   ____ ')
             print(' | |__  _   _  / ___| / ___| ')
-            print(' |  _ \\| | | | \\___ \\ \\___ \\ ')
-            print(' | |_)^| |_| |  ___) | ___) |')
+            print(' |  _ \\| | | | \\___ \\ \\___\\ ')
+            print(' | |_)^| |_| |  ___) | ___)|')
             print(' |_.__/ \\__, | |____(_)____/')
             print('        |___/        ')
             exit()
