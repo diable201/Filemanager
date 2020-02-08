@@ -229,7 +229,7 @@ def size():
             information = ENTRY.stat()
             if information.st_size / 1024 / 1024 >= 1:
                 print(f'{ENTRY.name}\t Size: {round(information.st_size / 1024 / 1024)}  MB')
-            if information.st_size / 1024 >= 1:
+            elif information.st_size / 1024 >= 1:
                 print(f'{ENTRY.name}\t Size: {round(information.st_size / 1024)}  KB')
             else:
                 print(f'{ENTRY.name}\t Size: {information.st_size}  Bytes')
@@ -241,7 +241,7 @@ def size():
 # Extract zip
 def extract_zip():
     try:
-        print('Enter the name of zip. Example: myzip.zip')
+        print('Enter the name of zip. Example: magic.zip')
         zip_name = str(input())
         with ZipFile(zip_name, 'r') as zip:
             zip.printdir()
@@ -298,7 +298,7 @@ def write_zip():
 
 # Get information about zip
 def zip_info():
-    print('Enter the zip name. Example: myzip.zip')
+    print('Enter the zip name. Example: magic.zip')
     try:
         zip_name = str(input())
         with ZipFile(zip_name, 'r') as zip:
