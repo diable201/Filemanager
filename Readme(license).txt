@@ -1,1 +1,0 @@
-This is file manager done by Seitbekov Sanzhar
