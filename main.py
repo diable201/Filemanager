@@ -31,10 +31,10 @@ def delete():
 def rename():
     print('Enter the name of file')
     try:
-        original = str(input())
+        old_filename = str(input())
         print('Enter the new name of file')
-        remaster = str(input())
-        os.rename(original, remaster)
+        new_filename = str(input())
+        os.rename(old_filename, new_filename)
     except FileNotFoundError:
         print('File doesnt exist')
 
@@ -64,7 +64,7 @@ def append_data():
             file.write(str(input()))
         print('Data appended successfully')
     except FileNotFoundError:
-        print('File doesnt exist')
+        print('File doesn\'t exist')
 
 
 # Return to the parent
@@ -75,7 +75,7 @@ def return_to_parent():
         path_of_file = Path(file).parent
         print(path_of_file)
     except FileNotFoundError:
-        print('File doesnt exist')
+        print('File doesn\'t exist')
 
 
 # Overwrite File
@@ -89,7 +89,7 @@ def overwrite():
             file_overwrite.write(content)
         print('File overwritten successfully')
     except FileNotFoundError:
-        print('File doesnt exist')
+        print('File doesn\'t exist')
 
 
 # Copy File
@@ -102,7 +102,7 @@ def copy():
         shutil.copy2(name_of_file, name_of_dir)
         print('File copied successfully')
     except FileNotFoundError:
-        print('File doesnt exist')
+        print('File doesn\'t exist')
 
 
 # Move File
@@ -115,7 +115,7 @@ def move():
         shutil.move(old_way, new_way)
         print('File moved successfully')
     except FileNotFoundError:
-        print('File doesnt exist')
+        print('File doesn\'t exist')
 
 
 # Extension of files
@@ -128,7 +128,7 @@ def file_extension():
         print('Files:', files)
         print('Matches:', fnmatch.filter(files, pattern))
     except FileNotFoundError:
-        print('Extension doesnt exist')
+        print('Extension doesn\'t exist')
 
 
 # The Next Commands for Directory
@@ -144,7 +144,7 @@ def rename_dir():
         os.rename(name_of_dir, new_name_of_dir)
         print('Directory renamed successfully')
     except FileNotFoundError:
-        print('Directory doesnt exist')
+        print('Directory doesn\'t exist')
 
 
 # Print number of files in dir
@@ -257,7 +257,7 @@ def extract_zip():
                 print('Operation terminated by user')
                 return
     except FileNotFoundError:
-        print('Zip doesnt exist')
+        print('Zip doesn\'t exist')
 
 
 # Get the files from directory for zipping
@@ -308,7 +308,7 @@ def zip_info():
                 print('\tZIP version:\t' + str(info.create_version))
                 print('\tCompressed:\t' + str(info.compress_size) + 'Bytes')
     except FileNotFoundError:
-        print('Zip doesnt exist')
+        print('Zip doesn\'t exist')
 
 
 # Menu
